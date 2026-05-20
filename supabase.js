@@ -194,6 +194,7 @@ function sbCheckSession(){
         // Check for Strava OAuth callback
         var params=new URLSearchParams(window.location.search);
         var code=params.get("code");
+        var hasStravaCode=!!code;
         if(code){
           window.history.replaceState({},"",window.location.pathname);
           sbStravaExchangeCode(code).then(function(){return sbSyncStrava()}).then(function(n){
@@ -205,7 +206,7 @@ function sbCheckSession(){
         // Check for pending Strava code from session
         var pending=sessionStorage.getItem("strava_code");
         if(pending){sessionStorage.removeItem("strava_code");sbStravaExchangeCode(pending).then(function(){return sbSyncStrava()}).catch(function(e){})}
-        showApp()
+        if(!hasStravaCode)showApp()
       })
     }else{
       // Not logged in - store Strava code for after login
