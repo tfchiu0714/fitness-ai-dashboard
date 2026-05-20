@@ -196,7 +196,11 @@ function sbCheckSession(){
         var code=params.get("code");
         if(code){
           window.history.replaceState({},"",window.location.pathname);
-          sbStravaExchangeCode(code).then(function(){return sbSyncStrava()}).then(function(n){alert("Synced "+n+" activities! Reloading...");location.reload()}).catch(function(e){alert("Strava connection failed: "+e.message)})
+          sbStravaExchangeCode(code).then(function(){return sbSyncStrava()}).then(function(n){
+            var obActive=document.getElementById("onboard-screen")&&document.getElementById("onboard-screen").classList.contains("active");
+            if(obActive&&typeof obGoTo==="function"){obGoTo(2);if(typeof init==="function")init()}
+            else{location.reload()}
+          }).catch(function(e){alert("Strava connection failed: "+e.message)})
         }
         // Check for pending Strava code from session
         var pending=sessionStorage.getItem("strava_code");
@@ -216,7 +220,7 @@ function sbCheckSession(){
 // ----- Strava Integration -----
 var STRAVA_CLIENT_ID="198583";
 var STRAVA_CLIENT_SECRET="ee1c54bca7baf2e0acc23ad261f50d16377f567b";
-var STRAVA_REDIRECT=window.location.origin+"/fitness-ai-dashboard/";
+var STRAVA_REDIRECT="https://tfchiu0714.github.io/fitness-ai-dashboard";
 
 function sbStravaAuthUrl(){
   return "https://www.strava.com/oauth/authorize?client_id="+STRAVA_CLIENT_ID+"&response_type=code&redirect_uri="+encodeURIComponent(STRAVA_REDIRECT)+"&scope=read,activity:read_all&approval_prompt=force"
