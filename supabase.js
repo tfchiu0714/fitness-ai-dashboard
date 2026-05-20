@@ -216,7 +216,7 @@ function sbCheckSession(){
 // ----- Strava Integration -----
 var STRAVA_CLIENT_ID="198583";
 var STRAVA_CLIENT_SECRET="ee1c54bca7baf2e0acc23ad261f50d16377f567b";
-var STRAVA_REDIRECT=window.location.origin+window.location.pathname;
+var STRAVA_REDIRECT=window.location.origin+"/fitness-ai-dashboard/";
 
 function sbStravaAuthUrl(){
   return "https://www.strava.com/oauth/authorize?client_id="+STRAVA_CLIENT_ID+"&response_type=code&redirect_uri="+encodeURIComponent(STRAVA_REDIRECT)+"&scope=read,activity:read_all&approval_prompt=force"
