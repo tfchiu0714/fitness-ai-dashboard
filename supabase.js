@@ -194,19 +194,18 @@ function sbCheckSession(){
         // Check for Strava OAuth callback
         var params=new URLSearchParams(window.location.search);
         var code=params.get("code");
-        var hasStravaCode=!!code;
         if(code){
           window.history.replaceState({},"",window.location.pathname);
+          showApp();
           sbStravaExchangeCode(code).then(function(){return sbSyncStrava()}).then(function(n){
-            var obActive=document.getElementById("onboard-screen")&&document.getElementById("onboard-screen").classList.contains("active");
-            if(obActive&&typeof obGoTo==="function"){obGoTo(2);if(typeof init==="function")init()}
-            else{location.reload()}
+            if(typeof obGoTo==="function"){setTimeout(function(){obGoTo(2)},500)}
           }).catch(function(e){alert("Strava connection failed: "+e.message)})
+        }else{
+          // Check for pending Strava code from session
+          var pending=sessionStorage.getItem("strava_code");
+          if(pending){sessionStorage.removeItem("strava_code");sbStravaExchangeCode(pending).then(function(){return sbSyncStrava()}).catch(function(e){})}
+          showApp()
         }
-        // Check for pending Strava code from session
-        var pending=sessionStorage.getItem("strava_code");
-        if(pending){sessionStorage.removeItem("strava_code");sbStravaExchangeCode(pending).then(function(){return sbSyncStrava()}).catch(function(e){})}
-        if(!hasStravaCode)showApp()
       })
     }else{
       // Not logged in - store Strava code for after login
