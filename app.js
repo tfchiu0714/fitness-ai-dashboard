@@ -58,7 +58,7 @@ function obRenderRacePreview(){var c=document.getElementById("ob-races-preview")
 function obSaveRaces(){if(obRaces.length>0){var ex2=sbGetRD();for(var i=0;i<obRaces.length;i++)ex2.push(obRaces[i]);sbSaveRaces(ex2)}obNext()}
 function obSaveAPI(){var k=document.getElementById("ob-apikey").value.trim();var u=document.getElementById("ob-apiurl").value.trim();var m=document.getElementById("ob-apimodel").value.trim();if(k)sbSaveAPISettings(k,u,m);obNext()}
 
-function getTheme(){return localStorage.getItem("fitness-ai-theme")||"dark"}
+function getTheme(){return localStorage.getItem("fitness-ai-theme")||"light"}
 function setTheme(t){localStorage.setItem("fitness-ai-theme",t);if(t==="light"){document.body.classList.add("light")}else{document.body.classList.remove("light")}}
 function toggleTheme(){var t=getTheme()==="light"?"dark":"light";setTheme(t);return t}
 function initTheme(){setTheme(getTheme())}
