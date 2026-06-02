@@ -388,7 +388,7 @@ function sbGetRoutines(){return _cache.routines||[]}
 
 // ----- AI Usage / Rate Limiting -----
 var AI_DAILY_LIMIT=10;
-var AI_EXEMPT_EMAILS=["leochiu@duck.com"];
+var AI_EXEMPT_EMAILS=["leochiu@duck.com","tfchiu0714@gmail.com"];
 
 function _sbIsExempt(){
   if(!SB_USER)return false;
